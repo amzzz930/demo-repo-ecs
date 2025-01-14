@@ -1,0 +1,22 @@
+name: Build Docker and Run Tests
+
+on:
+  pull_request:
+    branches:
+      - demo-repo  # Replace with your branch name
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Build Docker image
+      run: |
+        docker build -t my-app .
+
+    - name: Run tests in Docker container
+      run: |
+        docker run --rm my-app pytest tests/
