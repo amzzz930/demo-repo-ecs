@@ -9,7 +9,7 @@ on:
             - main  # Replace with your branch name
 
 jobs:
-  run_tests:
+  test:
     runs-on: ubuntu-latest
 
     steps:
