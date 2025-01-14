@@ -1,9 +1,12 @@
 name: Build Docker and Run Tests
 
 on:
-  pull_request:
-    branches:
-      - main  # Replace with your branch name
+    push:
+        branches:
+            - main  # Replace with your branch name
+    pull_request:
+        branches:
+            - main  # Replace with your branch name
 
 jobs:
   test:
