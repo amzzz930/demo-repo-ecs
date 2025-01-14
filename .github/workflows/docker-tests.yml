@@ -3,7 +3,7 @@ name: Build Docker and Run Tests
 on:
   pull_request:
     branches:
-      - demo-repo  # Replace with your branch name
+      - main  # Replace with your branch name
 
 jobs:
   test:
