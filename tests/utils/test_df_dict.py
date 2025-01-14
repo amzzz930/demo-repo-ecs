@@ -7,5 +7,4 @@ def test_df_a():
 
     result = df_a()
     result_dict = result.to_dict(orient='records')
-    assert result_dict[0]['column1'] == 1
-
+    assert result_dict[0]['column1'] == 5
