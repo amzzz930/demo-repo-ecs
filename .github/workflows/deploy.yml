@@ -23,7 +23,7 @@ jobs:
     - name: Deploy to EC2
       run: |
         ssh ec2-user@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
-          cd /path/to/your/repo
+          cd demo-repo
           git pull origin main
           # Run additional commands (restart services, build, etc.)
         EOF
