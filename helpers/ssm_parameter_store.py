@@ -1,5 +1,6 @@
 import boto3
 import botocore.exceptions
+from typing import Union
 
 
 class SsmParameterStore:
@@ -9,7 +10,8 @@ class SsmParameterStore:
         )  # if region not specified, will set region as region of the EC2 instance
         self.ssm = boto3.client("ssm", region_name=self.region)
 
-    def get_parameter(self, parameter_name: str) -> str:
+    def get_parameter(self, parameter_name: str) -> Union[str, None]:
+        """fetches specified parameter from param store. Full path needs to be provided"""
         try:
             response = self.ssm.get_parameter(Name=parameter_name, WithDecryption=True)
             return response["Parameter"]["Value"]
