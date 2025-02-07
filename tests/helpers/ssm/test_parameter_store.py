@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, MagicMock
 import botocore.exceptions
-from helpers.ssm_parameter_store import (
+from helpers.ssm.parameter_store import (
     SsmParameterStore,
 )
 
