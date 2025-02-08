@@ -2,7 +2,7 @@ import pytest
 import psycopg2
 import pandas as pd
 from unittest.mock import patch, MagicMock
-from helpers.ssm.parameter_store import SsmParameterStore
+from helpers.ssm.parameter_store import SSMParameterStore
 from helpers.rds.driver import PostgresDriver
 
 
@@ -18,7 +18,7 @@ def mock_db_connection():
 @pytest.fixture
 def mock_ssm():
     """Mock SSMParameterStore responses"""
-    with patch.object(SsmParameterStore, "get_parameter") as mock_get_parameter:
+    with patch.object(SSMParameterStore, "get_parameter") as mock_get_parameter:
         mock_get_parameter.side_effect = lambda parameter_name: {
             "/rds/staging/endpoint": "mock-db-endpoint",
             "/rds/staging/username": "mock-user",

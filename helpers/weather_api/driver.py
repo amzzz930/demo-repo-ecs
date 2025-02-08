@@ -1,7 +1,7 @@
 import requests
 import logging
 from requests.exceptions import RequestException
-from helpers.ssm.parameter_store import SsmParameterStore
+from helpers.ssm.parameter_store import SSMParameterStore
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -14,7 +14,7 @@ class WeatherApi:
     BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
 
     def __init__(self):
-        self.ssm = SsmParameterStore(region="eu-west-1")
+        self.ssm = SSMParameterStore(region="eu-west-1")
         self.api_key = self.ssm.get_parameter(parameter_name="WeatherApiKey")
 
         if not self.api_key:

@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import patch, MagicMock
 import botocore.exceptions
 from helpers.ssm.parameter_store import (
-    SsmParameterStore,
+    SSMParameterStore,
 )
 
 
@@ -19,7 +19,7 @@ def test_get_parameter_success(mock_ssm_client):
     """Test successful retrieval of an SSM parameter."""
     mock_ssm_client.get_parameter.return_value = {"Parameter": {"Value": "test-value"}}
 
-    ssm_store = SsmParameterStore()
+    ssm_store = SSMParameterStore()
     result = ssm_store.get_parameter("/test/parameter")
 
     assert result == "test-value"
@@ -35,7 +35,7 @@ def test_get_parameter_not_found(mock_ssm_client):
         "GetParameter",
     )
 
-    ssm_store = SsmParameterStore()
+    ssm_store = SSMParameterStore()
     result = ssm_store.get_parameter("/missing/parameter")
 
     assert result is None
@@ -51,7 +51,7 @@ def test_get_parameter_access_denied(mock_ssm_client):
         "GetParameter",
     )
 
-    ssm_store = SsmParameterStore()
+    ssm_store = SSMParameterStore()
     result = ssm_store.get_parameter("/restricted/parameter")
 
     assert result is None
@@ -66,7 +66,7 @@ def test_get_parameter_with_custom_region(mock_ssm_client):
         "Parameter": {"Value": "custom-region-value"}
     }
 
-    ssm_store = SsmParameterStore(region="us-west-2")
+    ssm_store = SSMParameterStore(region="us-west-2")
     result = ssm_store.get_parameter("/custom/region/parameter")
 
     assert result == "custom-region-value"
