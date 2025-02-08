@@ -12,7 +12,7 @@ class PostgresDriver:
     @classmethod
     def connect_to_db(cls):
         """Connect to the PostgreSQL database"""
-        ssm = SSMParameterStore()
+        ssm = SSMParameterStore(region="eu-west-1")
         try:
             connection = psycopg2.connect(
                 host=ssm.get_parameter(parameter_name="/rds/staging/endpoint"),
