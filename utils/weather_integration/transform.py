@@ -24,11 +24,11 @@ class PushToPostgres:
         if not result or "main" not in result:
             raise ValueError(f"⚠️ Invalid response from API: {result}")
 
-        location_name = result.get("name", "Unknown")
-        weather = result.get("weather", [{}])[0]  # Handle missing 'weather' key
-        main = weather.get("main", "Unknown")
-        description = weather.get("description", "No description")
-        temp_kelvin = result.get("main", {}).get("temp")
+        location_name = result.get("name")
+        weather = result.get("weather")[0]  # Handle missing 'weather' key
+        main = weather.get("main")
+        description = weather.get("description")
+        temp_kelvin = result.get("main").get("temp")
 
         if temp_kelvin is None:
             raise ValueError("⚠️ Temperature data missing in API response.")
@@ -49,7 +49,7 @@ class PushToPostgres:
             ) = self.get_location_data(location)
 
             query = """
-            INSERT INTO weather_data (created_at, location_name, main, description, celsius)
+            INSERT INTO weather_data (created_at, location_name, main, description, temp_celsius)
             VALUES (%s, %s, %s, %s, %s)
             """
 
