@@ -3,7 +3,7 @@ import botocore.exceptions
 from typing import Union
 
 
-class SsmParameterStore:
+class SSMParameterStore:
     def __init__(self, region: str = None):
         self.region = (
             region or boto3.Session().region_name
