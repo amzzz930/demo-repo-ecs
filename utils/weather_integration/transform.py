@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import logging
 
-from helpers.weather_api import WeatherApi
+from helpers.weather_api.driver import WeatherApi
 from helpers.rds.driver import PostgresDriver
 
 KELVIN_TO_CELSIUS = 273.15
