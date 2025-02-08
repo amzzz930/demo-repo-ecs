@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 class Run:
     @classmethod
-    def run(cls):
+    def run_integration(cls):
         transform = Transform()
 
         for city in CITIES:
