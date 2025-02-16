@@ -1,4 +1,4 @@
-FROM apache/airflow:2.7  # Use the latest stable Airflow image
+FROM apache/airflow:latest  # Always pulls the latest stable version (may introduce breaking changes)
 
 USER root
 RUN apt-get update && apt-get install -y curl unzip
