@@ -19,6 +19,10 @@ ENV PYTHONPATH="/opt/airflow/:$PYTHONPATH"
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r /opt/airflow/requirements.txt
+RUN pip install --no-cache-dir pytest  # Ensure pytest is installed
+
+# Copy the entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh  # Make it executable
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["webserver"]

@@ -22,4 +22,4 @@ jobs:
 
     - name: Run tests in Docker container
       run: |
-        docker run --rm my-airflow pytest /opt/airflow/tests/
+        docker run --rm my-airflow
