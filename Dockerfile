@@ -23,5 +23,5 @@ RUN pip install --no-cache-dir -r /opt/airflow/requirements.txt
 # Default command to run pytest
 CMD ["pytest"]
 
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["airflow", "webserver"]
 CMD ["webserver"]
