@@ -16,15 +16,19 @@ COPY tests /opt/airflow/tests/
 # Set Python path so Airflow recognizes custom modules
 ENV PYTHONPATH="/opt/airflow/:$PYTHONPATH"
 
-# Install Python dependencies
+# Switch to airflow user before installing packages
+USER airflow
+
+# Install Python dependencies as airflow user
 RUN pip install --no-cache-dir -r /opt/airflow/requirements.txt
 RUN pip install --no-cache-dir pytest  # Ensure pytest is installed
 
-# Copy the entrypoint script as root and set correct permissions
+# Switch back to root to copy the entrypoint script
+USER root
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh  # Make it executable
+RUN chmod +x /entrypoint.sh
 
-# Switch back to airflow user
+# Switch back to airflow user for running Airflow
 USER airflow
 
 ENTRYPOINT ["/entrypoint.sh"]
