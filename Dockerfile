@@ -1,18 +1,38 @@
-# Use a base image with Python installed
-FROM python:3.11-slim
+# Start with the official Airflow image
+FROM apache/airflow:latest
 
-# Set the working directory in the container
-WORKDIR /app
+# Use root to install dependencies
+USER root
+RUN apt-get update && apt-get install -y curl unzip
 
-# Copy the project files to the container
-COPY . /app
+# Set the working directory
+WORKDIR /opt/airflow/
 
-# Install required dependencies
-# If you have a requirements.txt file, you can use it to install dependencies
-RUN pip install -r requirements.txt
+# Copy dags, helpers, utils, and tests folders into the container
+COPY dags /opt/airflow/dags/
+COPY helpers /opt/airflow/helpers/
+COPY utils /opt/airflow/utils/
+COPY tests /opt/airflow/tests/
+COPY requirements.txt /opt/airflow/requirements.txt
 
-# Set the PYTHONPATH so the utils module can be found
-ENV PYTHONPATH=/app
+# Copy the entrypoint script and set the correct permissions
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Default command to run pytest
-CMD ["pytest"]
+# Set Python path to include custom modules
+ENV PYTHONPATH="/opt/airflow/:$PYTHONPATH"
+
+# Switch to airflow user before installing dependencies
+USER airflow
+
+# Install Python dependencies (from requirements.txt)
+RUN pip install --no-cache-dir -r /opt/airflow/requirements.txt
+
+# Install pytest to run tests
+RUN pip install --no-cache-dir pytest
+
+# Set the entrypoint to run the tests or start the webserver
+ENTRYPOINT ["/entrypoint.sh"]
+
+# Default to running the Airflow webserver
+CMD ["webserver"]

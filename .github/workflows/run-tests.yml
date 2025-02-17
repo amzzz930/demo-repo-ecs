@@ -1,0 +1,25 @@
+name: Build and Run Airflow Tests
+
+on:
+  push:
+    branches:
+      - main  # Replace with your branch name
+  pull_request:
+    branches:
+      - main  # Replace with your branch name
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Build Docker image
+      run: |
+        docker build -t my-airflow .
+
+    - name: Run tests in Docker container
+      run: |
+        docker run --rm my-airflow test  # This will run the "test" mode in entrypoint.sh without DB initialization
