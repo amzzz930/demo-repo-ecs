@@ -9,5 +9,8 @@ if [ $TEST_EXIT_CODE -ne 0 ]; then
   exit 1
 fi
 
-echo "Tests passed! Starting Airflow..."
+echo "Tests passed! Initializing Airflow database..."
+airflow db init
+
+echo "Starting Airflow..."
 exec airflow webserver
