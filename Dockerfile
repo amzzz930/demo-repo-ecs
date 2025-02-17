@@ -15,6 +15,10 @@ COPY utils /opt/airflow/utils/
 COPY tests /opt/airflow/tests/
 COPY requirements.txt /opt/airflow/requirements.txt
 
+# Copy the entrypoint script and set the correct permissions
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 # Set Python path to include custom modules
 ENV PYTHONPATH="/opt/airflow/:$PYTHONPATH"
 
@@ -27,13 +31,8 @@ RUN pip install --no-cache-dir -r /opt/airflow/requirements.txt
 # Install pytest to run tests
 RUN pip install --no-cache-dir pytest
 
-# Copy the entrypoint script
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
 # Set the entrypoint to run the tests or start the webserver
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Default to running the Airflow webserver
 CMD ["webserver"]
-
