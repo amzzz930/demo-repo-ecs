@@ -12,6 +12,7 @@ COPY dags /opt/airflow/dags/
 COPY utils /opt/airflow/utils/
 COPY helpers /opt/airflow/helpers/
 COPY requirements.txt /opt/airflow/requirements.txt
+COPY tests /opt/airflow/tests/
 
 # Set Python path so Airflow recognizes custom modules
 ENV PYTHONPATH="/opt/airflow/:$PYTHONPATH"
