@@ -1,4 +1,5 @@
-FROM apache/airflow:latest  # Always pulls the latest stable version (may introduce breaking changes)
+# Always pulls the latest stable version (may introduce breaking changes)
+FROM apache/airflow:latest
 
 USER root
 RUN apt-get update && apt-get install -y curl unzip
