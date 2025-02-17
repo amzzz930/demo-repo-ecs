@@ -3,10 +3,10 @@ name: Build and Run Airflow Tests
 on:
   push:
     branches:
-      - main  # Change to match your default branch
+      - main  # Replace with your branch name
   pull_request:
     branches:
-      - main  # Change to match your default branch
+      - main  # Replace with your branch name
 
 jobs:
   test:
@@ -22,4 +22,4 @@ jobs:
 
     - name: Run tests in Docker container
       run: |
-        docker run --rm my-airflow
+        docker run --rm my-airflow test  # This will run the "test" mode in entrypoint.sh without DB initialization
