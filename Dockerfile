@@ -4,7 +4,6 @@ FROM apache/airflow:latest
 USER root
 RUN apt-get update && apt-get install -y curl unzip
 
-USER airflow
 WORKDIR /opt/airflow/
 
 # Copy all DAG-related files
@@ -21,8 +20,11 @@ ENV PYTHONPATH="/opt/airflow/:$PYTHONPATH"
 RUN pip install --no-cache-dir -r /opt/airflow/requirements.txt
 RUN pip install --no-cache-dir pytest  # Ensure pytest is installed
 
-# Copy the entrypoint script
+# Copy the entrypoint script as root and set correct permissions
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh  # Make it executable
+
+# Switch back to airflow user
+USER airflow
 
 ENTRYPOINT ["/entrypoint.sh"]
