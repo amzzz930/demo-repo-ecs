@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y curl unzip
 USER airflow
 WORKDIR /opt/airflow/
 
-# Copy all DAG-related files
+# Copy all DAG-related files and dependencies
 COPY dags /opt/airflow/dags/
 COPY utils /opt/airflow/utils/
 COPY helpers /opt/airflow/helpers/
@@ -20,8 +20,12 @@ ENV PYTHONPATH="/opt/airflow/:$PYTHONPATH"
 # Install Python dependencies
 RUN pip install --no-cache-dir -r /opt/airflow/requirements.txt
 
-# Default command to run pytest
-CMD ["pytest"]
+# Ensure pytest is installed
+RUN pip install --no-cache-dir pytest
 
-CMD ["airflow", "webserver"]
-CMD ["webserver"]
+# Copy custom entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Use the custom entrypoint script
+ENTRYPOINT ["/entrypoint.sh"]
